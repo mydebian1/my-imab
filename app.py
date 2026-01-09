@@ -4,6 +4,7 @@ from flask_cors import CORS
 from config import Config
 
 from controller.company.create import create_bp
+from controller.company.update import update_bp
 
 def create_app():
     app = Flask(__name__)
@@ -22,6 +23,7 @@ def create_app():
 
     # Register EmplFLASK_ENVoyee blueprints
     app.register_blueprint(create_bp)
+    app.register_blueprint(update_bp)
 
     @app.route("/")
     def index():

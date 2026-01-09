@@ -22,21 +22,26 @@ class CreateCompanyRequest:
 
 class UpdateCompanyRequest:
     def __init__(self, data):
-        self.name = data.get("company_name")
-        self.email = data.get("company_email")
-        self.address = data.get("company_address")
-        self.date = data.get("company_joined")
+        self.company_name = data.get("name")
+        self.company_email = data.get("email")
+        self.company_address = data.get("address")
+        self.company_joined = data.get("date")
+
+        try:
+            self.company_joined = date.fromisoformat(data.get("date")) if data.get("date") else None
+        except ValueError:
+            self.company_joined = None  # Handle invalid formats
     
     def is_valid(self):
 
-        if not self.name:
+        if not self.company_name:
             return False, "Company Name Not Provided"
         
         return True, None
 
 
     def has_any_updates(self):
-        return any([self.name, self.email, self.address, self.date])
+        return any([self.company_name, self.company_email, self.company_address, self.company_joined])
     
 
 class CompanyResponse:
