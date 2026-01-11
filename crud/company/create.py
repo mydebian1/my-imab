@@ -3,12 +3,13 @@ from database import db
 from models import Companies
 from sqlalchemy.exc import IntegrityError
 
-def create_company_crud(company_name, company_email, company_address, company_joined):
+def create_company_crud(company_id, company_name, company_email, company_address, company_joined):
     current_app.logger.info("checking company crud 0")
     try:
         current_app.logger.info("checking company crud 1")
 
         create_company = Companies(
+            company_id=company_id,
             company_name=company_name,
             company_email=company_email,
             company_address=company_address,

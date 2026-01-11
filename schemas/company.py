@@ -2,6 +2,7 @@ from datetime import date
 
 class CreateCompanyRequest:
     def __init__(self, data):
+        self.company_id = data.get("id")
         self.company_name = data.get("name")
         self.company_email = data.get("email")
         self.company_address = data.get("address")
@@ -14,7 +15,7 @@ class CreateCompanyRequest:
 
     def is_valid(self):
         # Required fields
-        if not all([self.company_name, self.company_email, self.company_address, self.company_joined]):
+        if not all([self.company_id, self.company_name, self.company_email, self.company_address, self.company_joined]):
             return False, "Missing required fields"
 
         return True, None
@@ -22,6 +23,7 @@ class CreateCompanyRequest:
 
 class UpdateCompanyRequest:
     def __init__(self, data):
+        self.company_id = data.get("id")
         self.company_name = data.get("name")
         self.company_email = data.get("email")
         self.company_address = data.get("address")
@@ -34,19 +36,19 @@ class UpdateCompanyRequest:
     
     def is_valid(self):
 
-        if not self.company_name:
-            return False, "Company Name Not Provided"
+        if not self.company_id:
+            return False, "Company ID Not Provided"
         
         return True, None
 
 
     def has_any_updates(self):
-        return any([self.company_name, self.company_email, self.company_address, self.company_joined])
+        return any([self.company_id, self.company_name, self.company_email, self.company_address, self.company_joined])
     
 
 class CompanyResponse:
     def __init__(self, company):
-        self.id = company.id
+        self.id = company.company_id
         self.name = company.company_name
         self.email = company.company_email
         self.address = company.company_address

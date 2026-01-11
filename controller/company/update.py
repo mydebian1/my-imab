@@ -1,6 +1,6 @@
 from flask import Blueprint, Flask, request, jsonify, current_app
 from crud.company.update import update_company_crud
-from utils.utils import get_company_by_name
+from utils.utils import get_company_by_id
 from sqlalchemy.exc import IntegrityError
 from schemas.company import UpdateCompanyRequest, CompanyResponse
 
@@ -23,7 +23,7 @@ def update_require_company():
             "error": "Required fields for data update not provided"
             }), 400
     
-    company = get_company_by_name(data.company_name)
+    company = get_company_by_id(data.company_id)
 
     if not company:
         current_app.logger.error(f"Error. {company}")
@@ -33,7 +33,7 @@ def update_require_company():
         }), 404
 
     try:
-        company = update_company_crud(company_name=data.company_name, company_email=data.company_email, company_address=data.company_address, company_joined=data.company_joined)
+        company = update_company_crud(company_id=data.company_id, company_name=data.company_name, company_email=data.company_email, company_address=data.company_address, company_joined=data.company_joined)
 
         return jsonify({
             "code": "Company_Updated",
@@ -45,7 +45,7 @@ def update_require_company():
         current_app.logger.error(f"Integrity Error Occured: {error}")
         return jsonify({
             "CODE":"Integrity_ERROR_OCCURED",
-            "message":f"Integrity error occured for '{data.company_name}' creation, please try again {error}"
+            "message":f"Integrity error occured for '{data.company_id}' creation, please try again {error}"
         })
     
         
@@ -53,7 +53,7 @@ def update_require_company():
         current_app.logger.error(f"Integrity Error Occured: {e}")
         return jsonify({
             "CODE":"EXCEPTIONAL_ERROR_OCCURED",
-            "message":f"Exceptional error occured for '{data.company_name}' creation, please try again"
+            "message":f"Exceptional error occured for '{data.company_id}' creation, please try again"
         })
     
 

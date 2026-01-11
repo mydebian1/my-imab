@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, request, jsonify, current_app
 from crud.company.create import create_company_crud
-from utils.utils import get_company_by_name
+from utils.utils import get_company_by_id
 from sqlalchemy.exc import IntegrityError
 from schemas.company import CreateCompanyRequest, CompanyResponse
 # from auth import require_auth
@@ -16,7 +16,7 @@ def create_company():
     valid, message = data.is_valid()
 
 
-    current_app.logger.info(f"checking data company_name {data.company_name}")
+    current_app.logger.info(f"checking data Company ID {data.company_id}")
 
 
     if not valid:
@@ -24,17 +24,17 @@ def create_company():
         return jsonify({"error": f"Schema error. {message}"}), 400
 
     
-    company_by_name = get_company_by_name(data.company_name)
+    company_by_id = get_company_by_id(data.company_id)
 
 
-    current_app.logger.info(f"found company_by_name: {company_by_name}")
+    current_app.logger.info(f"found company_by_id: {company_by_id}")
 
 
-    if company_by_name:
+    if company_by_id:
         current_app.logger.error("Company Already Exists")
         return jsonify({
                 "code": "COMPANY_ALREADY_EXISTS",
-                "message": f"This name {data.company_name} already exists, try a new one"
+                "message": f"This name {data.company_id} already exists, try a new one"
         }), 403
     
 
@@ -43,6 +43,7 @@ def create_company():
 
     try:
         new_company = create_company_crud(
+            company_id = data.company_id,
             company_name = data.company_name,
             company_email = data.company_email,
             company_address = data.company_address,
