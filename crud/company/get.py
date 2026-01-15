@@ -1,11 +1,11 @@
 from database import db
-from controller.company.create import get_company_by_id
+from utils.utils import get_company_by_id
 from models import Companies
 from sqlalchemy.exc import IntegrityError
 
-def get_company_id_crud(company_id):
+def get_company_id_crud(id):
     try: 
-        get_company = get_company_by_id(company_id)
+        get_company = get_company_by_id(id)
         print(get_company)
         return get_company
     

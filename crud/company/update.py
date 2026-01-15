@@ -1,17 +1,16 @@
 from database import db
-from controller.company.create import get_company_by_id
+from utils.utils import get_company_by_id
 from sqlalchemy.exc import IntegrityError
 
-
-def update_company_crud(company_id, company_name, company_email, company_address, company_joined):
-    company = get_company_by_id(company_id)
+def update_company_crud(id, company_name, company_email, company_address, company_joined):
+    company = get_company_by_id(id)
 
     if not company:
         return company == False
 
     try:
-        if company_id:
-            company.company_id = company_id
+        if id:
+            company.id = id
 
         if company_name:
             company.company_name = company_name
