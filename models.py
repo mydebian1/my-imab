@@ -46,15 +46,15 @@ class Companies(BaseModel):
 class Employee(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     employee_id = db.Column(db.Integer, nullable=False)
-    employee_department = db.Column(Enum(DepartmentEnum), nullable=False, default=DepartmentEnum.guest)
+    employee_department = db.Column(Enum(DepartmentEnum, name="employee_department_enum"), nullable=False,)
     employee_name = db.Column(db.String(100), nullable=False)
-    employee_status = db.Column(Enum(StatusEnum), nullable=False, default=StatusEnum.trainee)
+    employee_status = db.Column(Enum(StatusEnum, name="employee_status_enum"), nullable=False)
     employee_email = db.Column(db.String(150), nullable=False)
     employee_phone_number_main = db.Column(db.String(255), nullable=False)
     employee_phone_number_secondary = db.Column(db.String(255), nullable=False)
     employee_dob = db.Column(db.Date, nullable=False)
     employee_cnic = db.Column(db.String(255), nullable=False)
-    employee_gender = db.Column(Enum(GenderEnum), nullable=False, default=GenderEnum)
+    employee_gender = db.Column(Enum(GenderEnum, name="employee_gender"), nullable=False)
     employee_address_permanent = db.Column(db.String(255), nullable=False)
     employee_address_current = db.Column(db.String(255), nullable=False)
 

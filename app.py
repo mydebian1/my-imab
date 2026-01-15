@@ -3,9 +3,13 @@ from database import init_db
 from flask_cors import CORS
 from config import Config
 
+# Company Blueprints
 from controller.company.create import create_bp
 from controller.company.update import update_bp
 from controller.company.get import get_bp
+
+# Company Blueprints
+from controller.employee.create import employee_create_bp
 
 def create_app():
     app = Flask(__name__)
@@ -22,10 +26,15 @@ def create_app():
     # Initialize DB
     init_db(app)
 
-    # Register EmplFLASK_ENVoyee blueprints
+    # Register Company Blueprints
     app.register_blueprint(create_bp)
     app.register_blueprint(update_bp)
     app.register_blueprint(get_bp)
+
+
+    # Register Employee Blueprints
+    app.register_blueprint(employee_create_bp)
+    
 
     @app.route("/")
     def index():

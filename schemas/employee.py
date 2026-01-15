@@ -1,26 +1,11 @@
-import enum
-
-class DepartmentEnum(enum.Enum):
-    HR = "hr"
-    ACCOUNTS = "accounts"
-    TECH = "tech"
-    GUEST = "guest"
-
-class StatusEnum(enum.Enum):
-    PERMANENT = "permanent"
-    PROBATION = "probation"
-    TRAINEE = "trainee"
-
-class GenderEnum(enum.Enum):
-    MALE = "male"
-    FEMALE = "female"
+from models import DepartmentEnum, StatusEnum, GenderEnum
 
 class CreateEmployeeRequest:
     def __init__(self, data):
         self.employee_id = data.get("employee_id")
-        self.employee_department = data.get("hr", "accounts", "tech", "guest")
+        self.employee_department = data.get("employee_department")
         self.employee_name = data.get("employee_name")
-        self.employee_status = data.get("permanent", "probation", "trainee")
+        self.employee_status = data.get("employee_status")
         self.employee_email = data.get("employee_email")
         self.employee_phone_number_main = data.get("employee_phone_number_main")
         self.employee_phone_number_secondary = data.get("employee_phone_number_secondary")
@@ -71,9 +56,9 @@ class CreateEmployeeRequest:
 class UpdateEmployeeRequest:
     def __init__(self, data):
         self.employee_id = data.get("employee_id")
-        self.employee_department = data.get("hr", "accounts", "tech", "guest")
+        self.employee_department = data.get("employee_department")
         self.employee_name = data.get("employee_name")
-        self.employee_status = data.get("permanent", "probation", "trainee")
+        self.employee_status = data.get("employee_status")
         self.employee_email = data.get("employee_email")
         self.employee_phone_number_main = data.get("employee_phone_number_main")
         self.employee_phone_number_secondary = data.get("employee_phone_number_secondary")
@@ -130,6 +115,7 @@ class DeleteEmployeeRequest:
 
 class EmployeeResponse:
     def __init__(self, employee):
+        self.id = employee.id
         self.employee_id = employee.employee_id
         self.employee_department = employee.employee_department.value
         self.employee_name = employee.employee_name
@@ -138,7 +124,7 @@ class EmployeeResponse:
         self.employee_phone_number_main = employee.employee_phone_number_main
         self.employee_phone_number_secondary = employee.employee_phone_number_secondary
         self.employee_dob = employee.employee_dob
-        self.employee_cnic = employee.employee_cnicb
+        self.employee_cnic = employee.employee_cnic
         self.employee_gender = employee.employee_gender.value
         self.employee_address_permanent = employee.employee_address_permanent
         self.employee_address_current = employee.employee_address_current
@@ -164,11 +150,13 @@ class EmployeeShortResponse:
     def __init__(self, employee):
         self.employee_id = employee.employee_id
         self.employee_name = employee.employee_name
+        self.employee_email = employee.employee_email
 
     def to_dict(self):
         return {
             "employee_id": self.employee_id,
-            "employee_name": self.employee_name
+            "employee_name": self.employee_name,
+            "employee_email": self.employee_email
         }
     
     @staticmethod
