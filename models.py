@@ -111,7 +111,6 @@ class Payroll(BaseModel):
     total_net_orion = db.Column(db.Integer, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint("company_id", name="unique_payroll_company_id"),
         UniqueConstraint("employee_id", name="unique_employee_id"),
         UniqueConstraint("batch_name", name="unique_batch_name"),
         CheckConstraint("employee_basic_salary >= 0", name="min_employee_basic_salary_check"),

@@ -1,0 +1,57 @@
+from database import db
+from utils.utils import get_employee_by_id
+from sqlalchemy.exc import IntegrityError
+
+
+def update_employee_crud(id, employee_department, employee_name, employee_status, employee_email, employee_phone_number_main, employee_phone_number_secondary, employee_dob, employee_cnic, employee_gender, employee_address_permanent, employee_address_current):
+    employee = get_employee_by_id(id)
+
+    if not employee:
+        return employee == False
+
+    try:
+        if id:
+            employee.id = id
+
+        if employee_department:
+            employee.employee_department = employee_department
+
+        if employee_name:
+            employee.employee_name = employee_name
+
+        if employee_status:
+            employee.employee_status = employee_status
+
+        if employee_email:
+            employee.employee_email = employee_email
+
+        if employee_phone_number_main:
+            employee.employee_phone_number_main = employee_phone_number_main
+
+        if employee_phone_number_secondary:
+            employee.employee_phone_number_secondary = employee_phone_number_secondary
+
+        if employee_dob:
+            employee.employee_dob = employee_dob
+
+        if employee_cnic:
+            employee.employee_cnic = employee_cnic
+
+        if employee_gender:
+            employee.employee_gender = employee_gender
+
+        if employee_address_permanent:
+            employee.employee_address_permanent = employee_address_permanent
+
+        if employee_address_current:
+            employee.employee_address_current = employee_address_current
+
+        db.session.commit()
+
+        return employee
+
+    except IntegrityError:
+        raise
+    
+    except Exception:
+        raise

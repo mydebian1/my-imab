@@ -8,8 +8,14 @@ from controller.company.create import create_bp
 from controller.company.update import update_bp
 from controller.company.get import get_bp
 
-# Company Blueprints
+# Employee Blueprints
 from controller.employee.create import employee_create_bp
+from controller.employee.update import employee_update_bp
+from controller.employee.delete import employee_delete_bp
+from controller.employee.get import employee_get_bp
+
+
+
 
 def create_app():
     app = Flask(__name__)
@@ -34,6 +40,9 @@ def create_app():
 
     # Register Employee Blueprints
     app.register_blueprint(employee_create_bp)
+    app.register_blueprint(employee_update_bp)
+    app.register_blueprint(employee_delete_bp)
+    app.register_blueprint(employee_get_bp)
     
 
     @app.route("/")

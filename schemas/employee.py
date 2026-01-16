@@ -11,7 +11,7 @@ class CreateEmployeeRequest:
         self.employee_phone_number_secondary = data.get("employee_phone_number_secondary")
         self.employee_dob = data.get("employee_dob")
         self.employee_cnic = data.get("employee_cnic")
-        self.employee_gender = data.get("male", "female")
+        self.employee_gender = data.get("employee_gender")
         self.employee_address_permanent = data.get("employee_address_permanent")
         self.employee_address_current = data.get("employee_address_current")
 
@@ -36,17 +36,17 @@ class CreateEmployeeRequest:
         
 
         # Validate Department Role Against Enum
-        if self.employee_department not in [role.value for role in DepartmentEnum]:
+        if self.employee_department and self.employee_department not in [role.value for role in DepartmentEnum]:
             return False, "Invalid role provided."
         
         
         # Validate Status Role Against Enum
-        if self.employee_status not in [role.value for role in StatusEnum]:
+        if self.employee_status and self.employee_status not in [role.value for role in StatusEnum]:
             return False, "Invalid role provided."
         
 
         # Validate Gender Role Against Enum
-        if self.employee_gender not in [role.value for role in GenderEnum]:
+        if self.employee_gender and self.employee_gender not in [role.value for role in GenderEnum]:
             return False, "Invalid role provided."
         
 
@@ -55,7 +55,7 @@ class CreateEmployeeRequest:
 
 class UpdateEmployeeRequest:
     def __init__(self, data):
-        self.employee_id = data.get("employee_id")
+        self.id = data.get("id")
         self.employee_department = data.get("employee_department")
         self.employee_name = data.get("employee_name")
         self.employee_status = data.get("employee_status")
@@ -64,24 +64,24 @@ class UpdateEmployeeRequest:
         self.employee_phone_number_secondary = data.get("employee_phone_number_secondary")
         self.employee_dob = data.get("employee_dob")
         self.employee_cnic = data.get("employee_cnic")
-        self.employee_gender = data.get("male", "female")
+        self.employee_gender = data.get("employee_gender")
         self.employee_address_permanent = data.get("employee_address_permanent")
         self.employee_address_current = data.get("employee_address_current")
     
     def is_valid(self):
 
         # Validate Department Role Against Enum
-        if self.employee_department not in [role.value for role in DepartmentEnum]:
+        if self.employee_department and self.employee_department not in [role.value for role in DepartmentEnum]:
             return False, "Invalid role provided."
         
         
         # Validate Status Role Against Enum
-        if self.employee_status not in [role.value for role in StatusEnum]:
+        if self.employee_status and self.employee_status not in [role.value for role in StatusEnum]:
             return False, "Invalid role provided."
         
 
         # Validate Gender Role Against Enum
-        if self.employee_gender not in [role.value for role in GenderEnum]:
+        if self.employee_gender and self.employee_gender not in [role.value for role in GenderEnum]:
             return False, "Invalid role provided."
         
         return True, None
@@ -89,7 +89,7 @@ class UpdateEmployeeRequest:
 
     def has_any_updates(self):
         return any([
-            self.employee_id,
+            self.id,
             self.employee_department,
             self.employee_name,
             self.employee_status,
@@ -105,10 +105,10 @@ class UpdateEmployeeRequest:
 
 class DeleteEmployeeRequest:
     def __init__(self, data):
-        self.employee_id = data.get("employee_id")
+        self.id = data.get("id")
 
     def is_valid(self):
-        if not any(self.employee_id):
+        if not any(self.id):
             return False, "Employee ID Is Required"
         
         return True, None
@@ -148,13 +148,13 @@ class EmployeeResponse:
     
 class EmployeeShortResponse:
     def __init__(self, employee):
-        self.employee_id = employee.employee_id
+        self.id = employee.id
         self.employee_name = employee.employee_name
         self.employee_email = employee.employee_email
 
     def to_dict(self):
         return {
-            "employee_id": self.employee_id,
+            "id": self.id,
             "employee_name": self.employee_name,
             "employee_email": self.employee_email
         }
