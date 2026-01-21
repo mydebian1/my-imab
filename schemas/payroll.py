@@ -1,48 +1,28 @@
 class CreatePayrollRequest:
     def __init__(self, data):
+        self.employee_id = data.get("employee_id")
+        self.company_id = data.get("company_id")
         self.batch_name = data.get("batch_name")
-        self.batch_status = data.get("batch_status")
-        self.employee_basic_salary = data.get("employee_basic_salary")
-        self.employee_hourly_rate = data.get("employee_hourly_rate")
+        self.batch_status = data.get("batch_status", "open")
         self.employee_contract_hours = data.get("employee_contract_hours")
         self.employee_rota_hours = data.get("employee_rota_hours")
         self.employee_worked_hours = data.get("employee_worked_hours")
-        self.employee_net_hours = data.get("employee_net_hours")
-        self.employee_over_below = data.get("employee_over_below")
         self.employee_lates = data.get("employee_lates")
         self.employee_early = data.get("employee_early")
         self.employee_leaves = data.get("employee_leaves")
-        self.employee_score = data.get("employee_score")
-        self.total_addition = data.get("total_addition")
-        self.total_deduction = data.get("total_deduction")
-        self.total_gross = data.get("total_gross")
-        self.total_tax = data.get("total_tax")
-        self.total_net_employee = data.get("total_net_employee")
-        self.total_net_orion = data.get("total_net_orion")
-
 
     def is_valid(self):
-        # Required fields
         if not all([
+            self.employee_id,
+            self.company_id,
             self.batch_name,
             self.batch_status,
-            self.employee_basic_salary,
-            self.employee_hourly_rate,
             self.employee_contract_hours,
             self.employee_rota_hours,
             self.employee_worked_hours,
-            self.employee_net_hours,
-            self.employee_over_below,
             self.employee_lates,
             self.employee_early,
-            self.employee_leaves,
-            self.employee_score,
-            self.total_addition,
-            self.total_deduction,
-            self.total_gross,
-            self.total_tax,
-            self.total_net_employee,
-            self.total_net_orion
+            self.employee_leaves
         ]):
             return False, "Missing Required Fields"
         
@@ -61,7 +41,7 @@ class CreatePayrollRequest:
 class UpdatePayrollRequest:
     def __init__(self, data):
         self.batch_name = data.get("batch_name")
-        self.batch_status = data.get("batch_status")
+        self.batch_status = data.get("batch_status", "open")
         self.employee_basic_salary = data.get("employee_basic_salary")
         self.employee_hourly_rate = data.get("employee_hourly_rate")
         self.employee_contract_hours = data.get("employee_contract_hours")
@@ -138,47 +118,49 @@ class DeletePayrollRequest:
 
 class PayrollResponse:
     def __init__(self, payroll):
+        self.employee_id = payroll.employee_id
+        self.company_id = payroll.company_id
         self.batch_name = payroll.batch_name
         self.batch_status = payroll.batch_status
-        self.employee_basic_salary = payroll.employee_basic_salary
-        self.employee_hourly_rate = payroll.employee_hourly_rate
         self.employee_contract_hours = payroll.employee_contract_hours
         self.employee_rota_hours = payroll.employee_rota_hours
         self.employee_worked_hours = payroll.employee_worked_hours
-        self.employee_net_hours = payroll.employee_net_hours
-        self.employee_over_below = payroll.employee_over_below
         self.employee_lates = payroll.employee_lates
         self.employee_early = payroll.employee_early
         self.employee_leaves = payroll.employee_leaves
-        self.employee_score = payroll.employee_score
-        self.total_addition = payroll.total_addition
-        self.total_deduction = payroll.total_deduction
-        self.total_gross = payroll.total_gross
-        self.total_tax = payroll.total_tax
-        self.total_net_employee = payroll.total_net_employee
-        self.total_net_orion = payroll.total_net_orion
+
+        #Check if employee relationship is loaded
+        if getattr(payroll, 'employee') and payroll.employee_id:
+            self.employee_name = payroll.employee.employee_name
+            self.employee_status = payroll.employee.employee_status if payroll.employee.employee_status else None
+            self.employee_department = payroll.employee.employee_department if payroll.employee.employee_department else None
+        else:
+            self.employee_name = None
+            self.employee_status = None
+            self.employee_department = None
+        
+        #Check if company relationship is loaded
+        if getattr(payroll, 'company') and payroll.company_id:
+            self.company_name = payroll.company.company_name
+        else:
+            self.company_name = None
 
     def to_dict(self):
         return {
+            "employee_id": self.employee_id,
+            "company_id": self.company_id,
             "batch_name": self.batch_name,
             "batch_status": self.batch_status,
-            "employee_basic_salary": self.employee_basic_salary,
-            "employee_hourly_rate": self.employee_hourly_rate,
             "employee_contract_hours": self.employee_contract_hours,
             "employee_rota_hours": self.employee_rota_hours,
             "employee_worked_hours": self.employee_worked_hours,
-            "employee_net_hours": self.employee_net_hours,
-            "employee_over_below": self.employee_over_below,
             "employee_lates": self.employee_lates,
             "employee_early": self.employee_early,
             "employee_leaves": self.employee_leaves,
-            "employee_score": self.employee_score,
-            "total_addition": self.total_addition,
-            "total_deduction": self.total_deduction,
-            "total_gross": self.total_gross,
-            "total_tax": self.total_tax,
-            "total_net_employee": self.total_net_employee,
-            "total_net_orion": self.total_net_orion
+            "employee_name": self.employee_name,
+            "employee_status": self.employee_status.value,
+            "employee_department": self.employee_department.value,
+            "company_name": self.company_name
         }
 
 

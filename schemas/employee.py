@@ -2,7 +2,7 @@ from models import DepartmentEnum, StatusEnum, GenderEnum
 
 class CreateEmployeeRequest:
     def __init__(self, data):
-        self.employee_id = data.get("employee_id")
+        self.employee_company_id = data.get("employee_company_id")
         self.employee_department = data.get("employee_department")
         self.employee_name = data.get("employee_name")
         self.employee_status = data.get("employee_status")
@@ -14,11 +14,12 @@ class CreateEmployeeRequest:
         self.employee_gender = data.get("employee_gender")
         self.employee_address_permanent = data.get("employee_address_permanent")
         self.employee_address_current = data.get("employee_address_current")
+        self.employee_basic_salary = data.get("employee_basic_salary")
 
     def is_valid(self):
         # Required fields
         if not all([
-            self.employee_id,
+            self.employee_company_id,
             self.employee_department,
             self.employee_name,
             self.employee_status,
@@ -29,7 +30,8 @@ class CreateEmployeeRequest:
             self.employee_cnic,
             self.employee_gender,
             self.employee_address_permanent,
-            self.employee_address_current
+            self.employee_address_current,
+            self.employee_basic_salary
         ]):
             
             return False, "Missing required fields"
@@ -116,7 +118,7 @@ class DeleteEmployeeRequest:
 class EmployeeResponse:
     def __init__(self, employee):
         self.id = employee.id
-        self.employee_id = employee.employee_id
+        self.employee_company_id = employee.employee_company_id
         self.employee_department = employee.employee_department.value
         self.employee_name = employee.employee_name
         self.employee_status = employee.employee_status.value
@@ -128,11 +130,12 @@ class EmployeeResponse:
         self.employee_gender = employee.employee_gender.value
         self.employee_address_permanent = employee.employee_address_permanent
         self.employee_address_current = employee.employee_address_current
+        self.employee_basic_salary = employee.employee_basic_salary
 
     def to_dict(self):
         return {
             "id": self.id,
-            "employee_id": self.employee_id,
+            "employee_company_id": self.employee_company_id,
             "employee_department": self.employee_department,
             "employee_name": self.employee_name,
             "employee_status": self.employee_status,
@@ -143,7 +146,8 @@ class EmployeeResponse:
             "employee_cnic": self.employee_cnic,
             "employee_gender": self.employee_gender,
             "employee_address_permanent": self.employee_address_permanent,
-            "employee_address_current": self.employee_address_current
+            "employee_address_current": self.employee_address_current,
+            "employee_basic_salary": self.employee_basic_salary
         }
     
 class EmployeeShortResponse:
@@ -151,12 +155,14 @@ class EmployeeShortResponse:
         self.id = employee.id
         self.employee_name = employee.employee_name
         self.employee_email = employee.employee_email
+        self.employee_status = employee.employee_status
 
     def to_dict(self):
         return {
             "id": self.id,
             "employee_name": self.employee_name,
-            "employee_email": self.employee_email
+            "employee_email": self.employee_email,
+            "employee_status": self.employee_status.value
         }
     
     @staticmethod

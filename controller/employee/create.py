@@ -30,7 +30,7 @@ def create_employee():
 
     try:
         new_employee = create_employee_crud(
-            employee_id = data.employee_id,
+            employee_company_id = data.employee_company_id,
             employee_department = data.employee_department,
             employee_name = data.employee_name,
             employee_status = data.employee_status,
@@ -41,7 +41,8 @@ def create_employee():
             employee_cnic = data.employee_cnic,
             employee_gender = data.employee_gender,
             employee_address_permanent = data.employee_address_permanent,
-            employee_address_current = data.employee_address_current
+            employee_address_current = data.employee_address_current,
+            employee_basic_salary = data.employee_basic_salary
         )
 
         return jsonify({

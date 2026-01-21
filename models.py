@@ -1,5 +1,7 @@
 from database import db
 from sqlalchemy import UniqueConstraint, CheckConstraint, Enum
+from sqlalchemy.orm import relationship
+from datetime import date
 from base import BaseModel
 import enum
 
@@ -45,7 +47,7 @@ class Companies(BaseModel):
 
 class Employee(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
-    employee_id = db.Column(db.Integer, nullable=False)
+    employee_company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     employee_department = db.Column(Enum(DepartmentEnum, name="employee_department_enum"), nullable=False,)
     employee_name = db.Column(db.String(100), nullable=False)
     employee_status = db.Column(Enum(StatusEnum, name="employee_status_enum"), nullable=False)
@@ -57,6 +59,8 @@ class Employee(BaseModel):
     employee_gender = db.Column(Enum(GenderEnum, name="employee_gender"), nullable=False)
     employee_address_permanent = db.Column(db.String(255), nullable=False)
     employee_address_current = db.Column(db.String(255), nullable=False)
+    employee_basic_salary = db.Column(db.Integer, nullable=False)
+    
 
     __table_args__ = (
         UniqueConstraint("employee_email", name="unique_employee_email"),
@@ -67,7 +71,7 @@ class Employee(BaseModel):
     def to_dict(self):
         return {
             "id": self.id,
-            "employee_id": self.employee_id,
+            "employee_company_id": self.employee_company_id,
             "employee_department": self.employee_department,
             "employee_name": self.employee_name,
             "employee_status": self.employee_status,
@@ -78,7 +82,8 @@ class Employee(BaseModel):
             "employee_cnic": self.employee_cnic,
             "employee_gender": self.employee_gender,
             "employee_address_permanent": self.employee_address_permanent,
-            "employee_address_current": self.employee_address_current
+            "employee_address_current": self.employee_address_current,
+            "employee_basic_salary": self.employee_basic_salary
         }
     
     @classmethod
@@ -88,10 +93,10 @@ class Employee(BaseModel):
 
 class Payroll(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
-    company_id = db.Column(db.Integer, nullable=False)
-    employee_id = db.Column(db.Integer, nullable=False)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     batch_name = db.Column(db.Integer, nullable=False)
-    batch_status = db.Column(db.Integer, nullable=False)
+    batch_status = db.Column(db.String, nullable=False)
     employee_basic_salary = db.Column(db.Integer, nullable=False)
     employee_hourly_rate = db.Column(db.Integer, nullable=False)
     employee_contract_hours = db.Column(db.Float, nullable=False)
@@ -110,9 +115,11 @@ class Payroll(BaseModel):
     total_net_employee = db.Column(db.Integer, nullable=False)
     total_net_orion = db.Column(db.Integer, nullable=False)
 
+    employee = relationship('Employee', foreign_keys=[employee_id])
+    company = relationship('Companies', foreign_keys=[company_id])
+
     __table_args__ = (
-        UniqueConstraint("employee_id", name="unique_employee_id"),
-        UniqueConstraint("batch_name", name="unique_batch_name"),
+        UniqueConstraint("employee_id", "batch_name", name="unique_employee_id_batch_name"),
         CheckConstraint("employee_basic_salary >= 0", name="min_employee_basic_salary_check"),
         CheckConstraint("employee_hourly_rate >= 0", name="min_employee_hourly_rate_check"),
         CheckConstraint("employee_contract_hours >= 0", name="min_employee_contract_hours_check"),
