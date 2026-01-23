@@ -16,8 +16,9 @@ from controller.employee.get import employee_get_bp
 
 # Payroll Blueprints
 from controller.payroll.create import payroll_create_bp
-
-
+from controller.payroll.update import payroll_update_bp
+from controller.payroll.delete import payroll_delete_bp
+from controller.payroll.get import payroll_get_bp
 
 
 def create_app():
@@ -49,6 +50,9 @@ def create_app():
 
     # Register Payroll Blueprints
     app.register_blueprint(payroll_create_bp)
+    app.register_blueprint(payroll_update_bp)
+    app.register_blueprint(payroll_delete_bp)
+    app.register_blueprint(payroll_get_bp)
 
 
     @app.route("/")

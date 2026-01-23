@@ -147,7 +147,7 @@ class EmployeeResponse:
             "employee_gender": self.employee_gender,
             "employee_address_permanent": self.employee_address_permanent,
             "employee_address_current": self.employee_address_current,
-            "employee_basic_salary": self.employee_basic_salary
+            "employee_basic_salary": self.employee_basic_salary 
         }
     
 class EmployeeShortResponse:
