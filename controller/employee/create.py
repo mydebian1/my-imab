@@ -3,10 +3,12 @@ from crud.employee.create import create_employee_crud
 from utils.utils import get_employee
 from sqlalchemy.exc import IntegrityError
 from schemas.employee import CreateEmployeeRequest, EmployeeResponse
+from auth import require_auth
 
 employee_create_bp = Blueprint("employee_create_bp", __name__, url_prefix="/employee")
 
 @employee_create_bp.route("/create", methods=["POST"])
+@require_auth
 def create_employee():
 
     data = CreateEmployeeRequest(request.json)

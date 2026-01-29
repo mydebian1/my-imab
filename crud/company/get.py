@@ -34,9 +34,9 @@ def get_all_company_crud():
     
 def get_short_company_crud():
     try:
-        Companies = Companies.query.with_entities(Companies.id, Companies.name).all()
+        companies = Companies.query.with_entities(Companies.id, Companies.company_name, Companies.company_email, Companies.company_joined).all()
         db.session.commit()
-        return Companies
+        return companies
     
     except IntegrityError as error:
         print(f"error: {error}")

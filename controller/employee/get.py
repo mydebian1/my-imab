@@ -1,11 +1,13 @@
 from flask import Blueprint, Flask, request, jsonify, current_app
 from crud.employee.get import get_employee_id_crud, get_all_employee_crud, get_short_employee_crud
 from schemas.employee import EmployeeResponse, EmployeeListResponse, EmployeeShortResponse
+from auth import require_auth
 
 employee_get_bp = Blueprint("employee_get_bp", __name__, url_prefix="/employee")
 
 
 @employee_get_bp.route("/get", methods = ["GET"])
+@require_auth
 def get_employees():
 
     data = request.json
@@ -43,6 +45,7 @@ def get_employees():
     
 
 @employee_get_bp.route("/all", methods = ["GET"])
+@require_auth
 def get_all_employees():
 
     print('Get All Employee Request Issue')
@@ -67,6 +70,7 @@ def get_all_employees():
         }
     
 @employee_get_bp.route("/short", methods = ["GET"])
+@require_auth
 def get_short_employee():
 
     try:

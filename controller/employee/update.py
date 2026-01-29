@@ -3,11 +3,13 @@ from crud.employee.update import update_employee_crud
 from utils.utils import get_employee_by_id
 from sqlalchemy.exc import IntegrityError
 from schemas.employee import UpdateEmployeeRequest, EmployeeResponse
+from auth import require_auth
 
 employee_update_bp = Blueprint("employee_update_bp", __name__, url_prefix="/employee")
 
 
 @employee_update_bp.route("/update", methods=["PUT"])
+@require_auth
 def update_require_employee():
 
     data = UpdateEmployeeRequest(request.json)

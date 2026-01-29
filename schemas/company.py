@@ -61,6 +61,25 @@ class CompanyResponse:
             "company_address": self.address,
             "company_joined": self.date
         }
+    
+class CompanyShortResponse:
+    def __init__(self, company):
+        self.id = company.id
+        self.name = company.company_name
+        self.email = company.company_email
+        self.date = company.company_joined
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "company_name": self.name,
+            "company_email": self.email,
+            "company_joined": self.date
+        }
+    
+    @staticmethod
+    def from_list(companies):
+        return [CompanyShortResponse(emp).to_dict() for emp in companies]
 
 class CompanyListResponse:
     @staticmethod

@@ -20,6 +20,32 @@ class GenderEnum(enum.Enum):
     male = "male"
     female = "female"
 
+class Login(BaseModel):
+    id = db.Column(db.Integer, primary_key=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'), nullable=False)
+    username = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+
+
+    __table_args__ = (
+        UniqueConstraint("username", name="unique_employee_username"),
+        CheckConstraint("length(username) > 6", name="check_username_min_length"),
+        CheckConstraint("length(password) > 8", name="check_password_min_length"),
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "employee_id": self.employee_id,
+            "username": self.username,
+            "password": self.password,
+        }
+    
+    @classmethod
+    def to_dict_list(cls, logins):
+        return [login.to_dict() for login in logins]
+
+
 class Companies(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     company_name = db.Column(db.String(150), nullable=False)

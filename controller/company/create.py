@@ -3,11 +3,12 @@ from crud.company.create import create_company_crud
 from utils.utils import get_company
 from sqlalchemy.exc import IntegrityError
 from schemas.company import CreateCompanyRequest, CompanyResponse
-# from auth import require_auth
+from auth import require_auth
 
 create_bp = Blueprint("create_bp", __name__, url_prefix="/company")
 
 @create_bp.route("/create", methods=["POST"])
+@require_auth
 def create_company():
     current_app.logger.info(request.json)
 

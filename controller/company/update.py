@@ -3,11 +3,13 @@ from crud.company.update import update_company_crud
 from utils.utils import get_company_by_id
 from sqlalchemy.exc import IntegrityError
 from schemas.company import UpdateCompanyRequest, CompanyResponse
+from auth import require_auth
 
 update_bp = Blueprint("update_bp", __name__, url_prefix="/company")
 
 
 @update_bp.route("/update", methods=["PUT"])
+@require_auth
 def update_require_company():
 
     data = UpdateCompanyRequest(request.json)

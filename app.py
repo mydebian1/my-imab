@@ -3,6 +3,9 @@ from database import init_db
 from flask_cors import CORS
 from config import Config
 
+# Login Blueprints
+from controller.login.login import login_bp
+
 # Company Blueprints
 from controller.company.create import create_bp
 from controller.company.update import update_bp
@@ -35,6 +38,9 @@ def create_app():
 
     # Initialize DB
     init_db(app)
+
+    # Register Login Blueprints
+    app.register_blueprint(login_bp)
 
     # Register Company Blueprints
     app.register_blueprint(create_bp)
