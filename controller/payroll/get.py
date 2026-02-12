@@ -65,7 +65,7 @@ def get_all_payrolls():
         current_app.logger.error(f"Exception Error {e}")
         return {
             "code": "EXCEPTION",
-            "message": f"Exception Error Occured For Payroll Deletion!"
+            "message": f"Exception Error Occured For Payroll!"
         }
     
 @payroll_get_bp.route("/short", methods = ["GET"])

@@ -98,15 +98,15 @@ class Employee(BaseModel):
         return {
             "id": self.id,
             "employee_company_id": self.employee_company_id,
-            "employee_department": self.employee_department,
+            "employee_department": self.employee_department.value,
             "employee_name": self.employee_name,
-            "employee_status": self.employee_status,
+            "employee_status": self.employee_status.value,
             "employee_email": self.employee_email,
             "employee_phone_number_main": self.employee_phone_number_main,
             "employee_phone_number_secondary": self.employee_phone_number_secondary,
             "employee_dob": self.employee_dob.isoformat(),
             "employee_cnic": self.employee_cnic,
-            "employee_gender": self.employee_gender,
+            "employee_gender": self.employee_gender.value,
             "employee_address_permanent": self.employee_address_permanent,
             "employee_address_current": self.employee_address_current,
             "employee_basic_salary": self.employee_basic_salary

@@ -85,6 +85,7 @@ class DeletePayrollRequest:
 
 class PayrollResponse:
     def __init__(self, payroll):
+        self.id = payroll.id
         self.employee_id = payroll.employee_id
         self.company_id = payroll.company_id
         self.batch_name = payroll.batch_name
@@ -95,6 +96,17 @@ class PayrollResponse:
         self.employee_lates = payroll.employee_lates
         self.employee_early = payroll.employee_early
         self.employee_leaves = payroll.employee_leaves
+        self.employee_basic_salary = payroll.employee_basic_salary
+        self.employee_hourly_rate = payroll.employee_hourly_rate
+        self.employee_over_below = payroll.employee_over_below
+        self.employee_score = payroll.employee_score
+        self.total_addition = payroll.total_addition
+        self.total_deduction = payroll.total_deduction
+        self.total_gross = payroll.total_gross
+        self.total_tax = payroll.total_tax
+        self.total_net_employee = payroll.total_net_employee
+        self.total_net_orion = payroll.total_net_orion
+
 
         #Check if employee relationship is loaded
         if getattr(payroll, 'employee') and payroll.employee_id:
@@ -114,20 +126,30 @@ class PayrollResponse:
 
     def to_dict(self):
         return {
+            "id": self.id,
             "employee_id": self.employee_id,
             "company_id": self.company_id,
             "batch_name": self.batch_name,
             "batch_status": self.batch_status,
+            "employee_department": self.employee_department.value,
             "employee_contract_hours": self.employee_contract_hours,
             "employee_rota_hours": self.employee_rota_hours,
             "employee_worked_hours": self.employee_worked_hours,
             "employee_lates": self.employee_lates,
             "employee_early": self.employee_early,
             "employee_leaves": self.employee_leaves,
+            "employee_basic_salary": self.employee_basic_salary,
+            "employee_hourly_rate": self.employee_hourly_rate,
+            "employee_over_below": self.employee_over_below,
+            "employee_score": self.employee_score,
+            "total_addition": self.total_addition,
+            "total_deduction": self.total_deduction,
+            "total_gross": self.total_gross,
+            "total_tax": self.total_tax,
+            "total_net_employee": self.total_net_employee,
+            "total_net_orion": self.total_net_orion,
             "employee_name": self.employee_name,
-            "employee_status": self.employee_status.value,
-            "employee_department": self.employee_department.value,
-            "company_name": self.company_name
+            "employee_status": self.employee_status.value
         }
     
 class PayrollShortResponse:

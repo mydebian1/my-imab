@@ -110,7 +110,7 @@ class DeleteEmployeeRequest:
         self.id = data.get("id")
 
     def is_valid(self):
-        if not any(self.id):
+        if not (self.id):
             return False, "Employee ID Is Required"
         
         return True, None
