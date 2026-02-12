@@ -93,6 +93,7 @@ class PayrollResponse:
         self.employee_contract_hours = payroll.employee_contract_hours
         self.employee_rota_hours = payroll.employee_rota_hours
         self.employee_worked_hours = payroll.employee_worked_hours
+        self.employee_net_hours = payroll.employee_net_hours
         self.employee_lates = payroll.employee_lates
         self.employee_early = payroll.employee_early
         self.employee_leaves = payroll.employee_leaves
@@ -135,6 +136,7 @@ class PayrollResponse:
             "employee_contract_hours": self.employee_contract_hours,
             "employee_rota_hours": self.employee_rota_hours,
             "employee_worked_hours": self.employee_worked_hours,
+            "employee_net_hours": self.employee_net_hours,
             "employee_lates": self.employee_lates,
             "employee_early": self.employee_early,
             "employee_leaves": self.employee_leaves,

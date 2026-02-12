@@ -59,6 +59,7 @@ def create_payroll():
             employee_contract_hours = data.employee_contract_hours,
             employee_rota_hours = data.employee_rota_hours,
             employee_worked_hours = data.employee_worked_hours,
+            employee_net_hours = 0,
             employee_lates = data.employee_lates,
             employee_early = data.employee_early,
             employee_leaves = data.employee_leaves,
