@@ -7,11 +7,6 @@ class CreateCompanyRequest:
         self.company_address = data.get("company_address")
         self.company_joined = data.get("company_joined")
 
-        try:
-            self.company_joined = date.fromisoformat(data.get("date")) if data.get("date") else None
-        except ValueError:
-            self.company_joined = None  # Handle invalid formats
-
     def is_valid(self):
         # Required fields
         if not all([self.company_name, self.company_email, self.company_address, self.company_joined]):
@@ -27,11 +22,6 @@ class UpdateCompanyRequest:
         self.company_email = data.get("company_email")
         self.company_address = data.get("company_address")
         self.company_joined = data.get("company_joined")
-
-        try:
-            self.company_joined = date.fromisoformat(data.get("date")) if data.get("date") else None
-        except ValueError:
-            self.company_joined = None  # Handle invalid formats
     
     def is_valid(self):
 
@@ -65,16 +55,16 @@ class CompanyResponse:
 class CompanyShortResponse:
     def __init__(self, company):
         self.id = company.id
-        self.name = company.company_name
-        self.email = company.company_email
-        self.date = company.company_joined
+        self.company_name = company.company_name
+        self.company_email = company.company_email
+        self.company_joined = company.company_joined
 
     def to_dict(self):
         return {
             "id": self.id,
             "company_name": self.company_name,
             "company_email": self.company_email,
-            "company_joined": self.company_joined
+            "company_joined": self.company_joined.isoformat()
         }
     
     @staticmethod
