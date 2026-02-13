@@ -2,10 +2,10 @@ from datetime import date
 
 class CreateCompanyRequest:
     def __init__(self, data):
-        self.company_name = data.get("name")
-        self.company_email = data.get("email")
-        self.company_address = data.get("address")
-        self.company_joined = data.get("date")
+        self.company_name = data.get("company_name")
+        self.company_email = data.get("company_email")
+        self.company_address = data.get("company_address")
+        self.company_joined = data.get("company_joined")
 
         try:
             self.company_joined = date.fromisoformat(data.get("date")) if data.get("date") else None
@@ -23,10 +23,10 @@ class CreateCompanyRequest:
 class UpdateCompanyRequest:
     def __init__(self, data):
         self.id = data.get("id")
-        self.company_name = data.get("name")
-        self.company_email = data.get("email")
-        self.company_address = data.get("address")
-        self.company_joined = data.get("date")
+        self.company_name = data.get("company_name")
+        self.company_email = data.get("company_email")
+        self.company_address = data.get("company_address")
+        self.company_joined = data.get("company_joined")
 
         try:
             self.company_joined = date.fromisoformat(data.get("date")) if data.get("date") else None
@@ -48,18 +48,18 @@ class UpdateCompanyRequest:
 class CompanyResponse:
     def __init__(self, company):
         self.id = company.id
-        self.name = company.company_name
-        self.email = company.company_email
-        self.address = company.company_address
-        self.date = company.company_joined
+        self.company_name = company.company_name
+        self.company_email = company.company_email
+        self.company_address = company.company_address
+        self.company_joined = company.company_joined
 
     def to_dict(self):
         return {
             "id": self.id,
-            "company_name": self.name,
-            "company_email": self.email,
-            "company_address": self.address,
-            "company_joined": self.date
+            "company_name": self.company_name,
+            "company_email": self.company_email,
+            "company_address": self.company_address,
+            "company_joined": self.company_joined
         }
     
 class CompanyShortResponse:
@@ -72,9 +72,9 @@ class CompanyShortResponse:
     def to_dict(self):
         return {
             "id": self.id,
-            "company_name": self.name,
-            "company_email": self.email,
-            "company_joined": self.date
+            "company_name": self.company_name,
+            "company_email": self.company_email,
+            "company_joined": self.company_joined
         }
     
     @staticmethod

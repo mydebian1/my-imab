@@ -23,7 +23,7 @@ def delete_payroll():
     if not payroll_delete:
         current_app.logger.error(f"Payroll Error. {payroll_delete}")
         return jsonify({
-            "code": "Payroll_Desn't_Exist", 
+            "code": "Payroll_Desnt_Exist", 
             "message": f"Payroll Doesn't Exist. Please Enter Your Valid ID {data.id}"
         }), 404
 
