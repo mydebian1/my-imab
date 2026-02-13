@@ -3,7 +3,7 @@ from models import Payroll
 from sqlalchemy.exc import IntegrityError
 
 
-def create_payroll_crud(employee_id, company_id, batch_name, batch_status, employee_contract_hours, employee_rota_hours, employee_worked_hours, employee_lates, employee_early, employee_leaves, employee_basic_salary, employee_hourly_rate, employee_over_below, employee_score, total_addition, total_deduction, total_gross, total_tax, total_net_employee, total_net_orion):
+def create_payroll_crud(employee_id, company_id, batch_name, batch_status, employee_contract_hours, employee_rota_hours, employee_worked_hours, employee_net_hours, employee_lates, employee_early, employee_leaves, employee_basic_salary, employee_hourly_rate, employee_over_below, employee_score, total_addition, total_deduction, total_gross, total_tax, total_net_employee, total_net_orion):
     try:
         create_payroll = Payroll(
             employee_id = employee_id,
