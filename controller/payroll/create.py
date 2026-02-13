@@ -78,7 +78,7 @@ def create_payroll():
         return jsonify({
             "code": "Payroll_CREATED",
             "data": PayrollResponse(new_payroll).to_dict()
-        }), 201
+        }), 200
     
     except IntegrityError as error:
         current_app.logger.error(f"Integrity Error {error}")
