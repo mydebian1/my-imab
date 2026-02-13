@@ -40,7 +40,7 @@ def update_require_company():
         return jsonify({
             "code": "Company_Updated",
             "data": CompanyResponse(company).to_dict()
-        }), 403
+        }), 200
     
 
     except IntegrityError as error:

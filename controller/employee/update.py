@@ -53,7 +53,7 @@ def update_require_employee():
         return jsonify({
             "code": "Employee_Updated",
             "data": EmployeeResponse(employee).to_dict()
-        }), 403
+        }), 200
     
 
     except IntegrityError as error:

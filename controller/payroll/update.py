@@ -46,7 +46,7 @@ def update_payroll():
         return jsonify({
             "code": "Payroll_Updated",
             "data": PayrollResponse(updated_payroll).to_dict()
-        }), 403
+        }), 200
            
     except IntegrityError as error:
         current_app.logger.error(f"Integrity Error Occured: {error}")
